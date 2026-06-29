@@ -96,3 +96,7 @@ class RuntimeCaps:
     # Tokenmaxx off-hours orchestrator (#11). ``None`` (the default) or a
     # config with ``enabled=False`` means the service never starts.
     tokenmaxx: TokenmaxxConfig | None = None
+    # Per-user secret vault key (#5): server-held Fernet key that
+    # encrypts/decrypts vault secrets at rest. ``None`` disables the vault
+    # (the REST endpoints 404 and the resolver returns nothing).
+    vault_key: bytes | None = None
