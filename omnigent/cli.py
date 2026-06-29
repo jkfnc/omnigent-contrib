@@ -3071,6 +3071,7 @@ def server(
     # Web Push (#8): load/persist the server's stable VAPID key so a browser's
     # subscription survives restarts. The `vapid.subject` config is the JWT
     # contact (some push services require a real mailto/URL).
+    from omnigent.runtime.tokenmaxx import parse_tokenmaxx_config
     from omnigent.server.vapid_keys import load_or_create_vapid_key
 
     _vapid_cfg = cfg.get("vapid") or {}
@@ -3085,6 +3086,7 @@ def server(
         routing_client=routing_client,
         vapid_private_key=vapid_private_key,
         vapid_subject=vapid_subject,
+        tokenmaxx=parse_tokenmaxx_config(cfg.get("tokenmaxx")),
     )
     init_runtime(
         conversation_store=conversation_store,

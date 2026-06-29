@@ -10,6 +10,7 @@ if TYPE_CHECKING:
 
     from cryptography.hazmat.primitives.asymmetric.ec import EllipticCurvePrivateKey
 
+    from omnigent.runtime.tokenmaxx import TokenmaxxConfig
     from omnigent.server.smart_routing import RoutingClient
     from omnigent.spec.types import LLMConfig, MCPServerConfig, PolicySpec
 
@@ -92,3 +93,6 @@ class RuntimeCaps:
     # disables push (the endpoints 503 and the sender no-ops).
     vapid_private_key: EllipticCurvePrivateKey | None = None
     vapid_subject: str = "mailto:admin@localhost"
+    # Tokenmaxx off-hours orchestrator (#11). ``None`` (the default) or a
+    # config with ``enabled=False`` means the service never starts.
+    tokenmaxx: TokenmaxxConfig | None = None
