@@ -3008,6 +3008,7 @@ def server(
     # with "unable to open database file".
     _ensure_sqlite_parent_dir(db_uri)
 
+    from omnigent.stores.canvas_store.sqlalchemy_store import SqlAlchemyCanvasStore
     from omnigent.stores.permission_store.sqlalchemy_store import SqlAlchemyPermissionStore
     from omnigent.stores.schedule_store.sqlalchemy_store import SqlAlchemyScheduleStore
     from omnigent.stores.work_item_store.sqlalchemy_store import SqlAlchemyWorkItemStore
@@ -3020,6 +3021,7 @@ def server(
     permission_store = SqlAlchemyPermissionStore(db_uri)
     schedule_store = SqlAlchemyScheduleStore(db_uri)
     work_item_store = SqlAlchemyWorkItemStore(db_uri)
+    canvas_store = SqlAlchemyCanvasStore(db_uri)
     artifact_store = _create_artifact_store(art_loc)
 
     # Initialize the runtime with store references so workflow code
@@ -3074,6 +3076,7 @@ def server(
         policy_store=policy_store,
         schedule_store=schedule_store,
         work_item_store=work_item_store,
+        canvas_store=canvas_store,
         caps=caps,
     )
 
@@ -3158,6 +3161,7 @@ def server(
 
         account_store = SqlAlchemyAccountStore(db_uri)
 
+    from omnigent.server.routes.canvas import create_canvas_router
     from omnigent.server.routes.usage import create_usage_router
     from omnigent.server.routes.work_items import create_work_items_router
 
@@ -3190,6 +3194,11 @@ def server(
                 create_usage_router(conversation_store, auth_provider, permission_store),
                 "/v1",
                 ["usage"],
+            ),
+            (
+                create_canvas_router(canvas_store, auth_provider, permission_store),
+                "/v1",
+                ["canvas"],
             ),
         ],
     )
