@@ -887,9 +887,7 @@ class SqlUserCredential(Base):
     created_at: Mapped[int] = mapped_column(Integer)
     updated_at: Mapped[int | None] = mapped_column(Integer, nullable=True)
 
-    __table_args__ = (
-        UniqueConstraint("user_id", "name", name="uq_user_credentials_user_name"),
-    )
+    __table_args__ = (UniqueConstraint("user_id", "name", name="uq_user_credentials_user_name"),)
 
 
 class SqlHost(Base):

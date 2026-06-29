@@ -3247,9 +3247,7 @@ def server(
                 ["push"],
             ),
             (
-                create_credentials_router(
-                    user_credential_store, auth_provider, permission_store
-                ),
+                create_credentials_router(user_credential_store, auth_provider, permission_store),
                 "/v1",
                 ["credentials"],
             ),
