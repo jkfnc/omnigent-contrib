@@ -1,5 +1,6 @@
 import {
   BotIcon,
+  ClockIcon,
   FileIcon,
   LayoutTemplateIcon,
   ListTodoIcon,
@@ -11,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CanvasPanel } from "./CanvasPanel";
 import { FilesPanel } from "./FilesPanel";
+import { SchedulesPanel } from "./SchedulesPanel";
 import { FileViewer } from "./FileViewer";
 import type { ChangedSort } from "./FlatFileList";
 import { InlineTerminalsSection } from "./InlineTerminalsSection";
@@ -152,6 +154,8 @@ interface WorkspacePanelProps {
   showFilesPanel: boolean;
   /** Whether the Canvas tab is available (the conversation has a canvas). */
   showCanvasTab: boolean;
+  /** Whether the Schedules tab is available (the conversation has schedules). */
+  showSchedulesTab: boolean;
   /** Count of changed files, shown as the Files tab badge. */
   changedCount: number;
   /**
@@ -237,6 +241,7 @@ export function WorkspacePanel({
   onRightRailTabChange,
   showFilesPanel,
   showCanvasTab,
+  showSchedulesTab,
   changedCount,
   showShellsTab,
   terminalsLength,
@@ -390,6 +395,15 @@ export function WorkspacePanel({
                 </span>
               </TabsTrigger>
             )}
+            {showSchedulesTab && (
+              <TabsTrigger
+                value="schedules"
+                className="h-[32px] gap-[6px] rounded-[8px] px-[12px] text-[13px] leading-5"
+              >
+                <ClockIcon className="size-4" />
+                Schedules
+              </TabsTrigger>
+            )}
           </TabsList>
         </Tabs>
         {openFiles.length > 0 && (
@@ -445,6 +459,8 @@ export function WorkspacePanel({
           />
         ) : rightRailTab === "canvas" && showCanvasTab ? (
           <CanvasPanel conversationId={conversationId} />
+        ) : rightRailTab === "schedules" && showSchedulesTab ? (
+          <SchedulesPanel conversationId={conversationId} />
         ) : rightRailTab === "subagents" && rootSessionId ? (
           <SubagentsPanel conversationId={conversationId} rootSessionId={rootSessionId} />
         ) : rightRailTab === "todos" && isClaudeNative ? (

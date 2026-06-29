@@ -41,6 +41,7 @@ function renderWorkspace(
     selectedFilePath?: string | null;
     openFiles?: string[];
     showCanvasTab?: boolean;
+    showSchedulesTab?: boolean;
   } = {},
 ) {
   const openFileViewer = vi.fn();
@@ -55,6 +56,7 @@ function renderWorkspace(
       onRightRailTabChange={onRightRailTabChange}
       showFilesPanel
       showCanvasTab={overrides.showCanvasTab ?? false}
+      showSchedulesTab={overrides.showSchedulesTab ?? false}
       changedCount={0}
       showShellsTab={false}
       terminalsLength={0}
