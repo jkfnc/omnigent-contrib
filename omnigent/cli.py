@@ -3162,6 +3162,7 @@ def server(
         account_store = SqlAlchemyAccountStore(db_uri)
 
     from omnigent.server.routes.canvas import create_canvas_router
+    from omnigent.server.routes.schedules import create_schedules_router
     from omnigent.server.routes.usage import create_usage_router
     from omnigent.server.routes.work_items import create_work_items_router
 
@@ -3199,6 +3200,11 @@ def server(
                 create_canvas_router(canvas_store, auth_provider, permission_store),
                 "/v1",
                 ["canvas"],
+            ),
+            (
+                create_schedules_router(schedule_store, auth_provider, permission_store),
+                "/v1",
+                ["schedules"],
             ),
         ],
     )
